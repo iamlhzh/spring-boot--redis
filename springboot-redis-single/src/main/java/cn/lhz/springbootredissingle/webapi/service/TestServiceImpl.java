@@ -31,10 +31,8 @@ public class TestServiceImpl implements TestService {
         map.put("RemoteHost",request.getRemoteHost());
         Boolean a = redisTemplate.hasKey("a");
         Set keys = redisTemplate.keys("*");
-        String kk = stringRedisTemplate.opsForValue().get("kk");
-        stringRedisTemplate.opsForValue().set("a","b");
-//        map.put("kk",kk);
-        redisTemplate.opsForValue().get("kk");
+        System.out.println(a);
+        System.out.println(keys);
         return map;
     }
 }
