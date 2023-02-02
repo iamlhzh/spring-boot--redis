@@ -2,6 +2,7 @@ package cn.lhz.springbootredissingle.webapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +21,20 @@ public class TestServiceImpl implements TestService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
     @Override
-    public Map<String, Object> getTest(HttpServletRequest request) {
-        Map<String,Object>map = new HashMap<>();
+    public Map<Object, Object> getTest(HttpServletRequest request) {
+        Map<Object,Object>map = new HashMap<>();
         map.put("RemoteAddr",request.getRemoteAddr());
         map.put("RemoteHost",request.getRemoteHost());
         Boolean a = redisTemplate.hasKey("a");
         Set keys = redisTemplate.keys("*");
-        ValueOperations valueOperations = redisTemplate.opsForValue();
+        String kk = stringRedisTemplate.opsForValue().get("kk");
+        stringRedisTemplate.opsForValue().set("a","b");
+//        map.put("kk",kk);
+        redisTemplate.opsForValue().get("kk");
         return map;
     }
 }

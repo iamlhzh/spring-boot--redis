@@ -20,8 +20,8 @@ public class TestContoller {
 
     @RequestMapping(value = "/getTest", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getTest(HttpServletRequest request) {
-        Map<String, Object> map = testService.getTest(request);
+    public Map<Object, Object> getTest(HttpServletRequest request) {
+        Map<Object, Object> map = testService.getTest(request);
         return map;
     }
 
