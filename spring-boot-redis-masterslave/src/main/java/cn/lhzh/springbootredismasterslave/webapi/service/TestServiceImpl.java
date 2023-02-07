@@ -1,5 +1,6 @@
 package cn.lhzh.springbootredismasterslave.webapi.service;
 
+import cn.lhzh.springbootredismasterslave.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -16,23 +17,18 @@ import java.util.Set;
  */
 @Service
 public class TestServiceImpl implements TestService {
-    
-    @Autowired
-    private RedisTemplate redisTemplate;
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisUtils redisUtils;
 
     @Override
-    public Map<Object, Object> getTest(HttpServletRequest request) {
+    public Map<Object, Object> getTest(HttpServletRequest request,String key,String value) {
         Map<Object,Object>map = new HashMap<>();
-        map.put("RemoteAddr",request.getRemoteAddr());
-        map.put("RemoteHost",request.getRemoteHost());
-        Boolean a = redisTemplate.hasKey("a");
-        Set keys = redisTemplate.keys("*");
-        System.out.println(a);
-        System.out.println(keys);
-        map.put("keys",keys);
+        // 主机写
+        boolean setRes = redisUtils.set(key, value);
+        // 从机读
+        String getContent = redisUtils.get(key).toString();
+        map.put("value",getContent);
         return map;
     }
 }

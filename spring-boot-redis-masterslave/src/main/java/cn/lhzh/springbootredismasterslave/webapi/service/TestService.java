@@ -8,5 +8,5 @@ import java.util.Map;
  * @date 2022/11/4 16:05
  */
 public interface TestService {
-    Map<Object, Object> getTest(HttpServletRequest request);
+    Map<Object, Object> getTest(HttpServletRequest request,String key,String value);
 }
