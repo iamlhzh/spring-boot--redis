@@ -1,5 +1,6 @@
 package cn.lhzh.springbootredissentinel.webapi.service;
 
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -8,5 +9,7 @@ import java.util.Map;
  * @date 2022/11/4 16:05
  */
 public interface TestService {
-    Map<Object, Object> getTest(HttpServletRequest request, String key, String value);
+    Map<Object, Object> getTest(String key);
+
+    Map<Object, Object> setTest(String key, String value);
 }

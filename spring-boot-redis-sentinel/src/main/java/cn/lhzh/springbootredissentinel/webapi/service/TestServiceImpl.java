@@ -1,6 +1,7 @@
 package cn.lhzh.springbootredissentinel.webapi.service;
 
-import cn.lhzh.springbootredismasterslave.utils.RedisUtils;
+
+import cn.lhzh.springbootredissentinel.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,19 @@ public class TestServiceImpl implements TestService {
     private RedisUtils redisUtils;
 
     @Override
-    public Map<Object, Object> getTest(HttpServletRequest request,String key,String value) {
-        Map<Object,Object>map = new HashMap<>();
-        // 主机写
-        boolean setRes = redisUtils.set(key, value);
+    public Map<Object, Object> getTest(String key) {
+        Map<Object,Object> map = new HashMap<>();
         // 从机读
-        String getContent = redisUtils.get(key).toString();
-        map.put("value",getContent);
+        Object getContent = redisUtils.get(key);
+        map.put(key,getContent);
+        return map;
+    }
+
+    @Override
+    public Map<Object, Object> setTest(String key, String value) {
+        Map<Object,Object> map = new HashMap<>();
+        boolean set = redisUtils.set(key, value);
+        map.put("result",set);
         return map;
     }
 }
