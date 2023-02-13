@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * @author 卢宏政
@@ -19,12 +20,15 @@ public class TestServiceImpl implements TestService {
     @Autowired
     private RedisUtils redisUtils;
 
+    private Logger logger = Logger.getLogger(TestServiceImpl.class.getName());
+
     @Override
     public Map<Object, Object> getTest(String key) {
         Map<Object,Object> map = new HashMap<>();
         // 从机读
         Object getContent = redisUtils.get(key);
         map.put(key,getContent);
+        logger.info("getTest,key:"+key+",value:"+getContent);
         return map;
     }
 
@@ -33,6 +37,7 @@ public class TestServiceImpl implements TestService {
         Map<Object,Object> map = new HashMap<>();
         boolean set = redisUtils.set(key, value);
         map.put("result",set);
+        logger.info("getTest,key:"+map.get(key)+",boolean:"+set);
         return map;
     }
 }
